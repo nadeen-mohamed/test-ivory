@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدورات التدريبية</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .header {
+        background-color: #800000;
+        color: white;
+        padding: 1rem;
+    }
+
+    .header-top button {
+        background: white;
+        color: #800000;
+        border: none;
+        padding: 0.5rem 1rem;
+        margin-left: 0.5rem;
+        cursor: pointer;
+    }
+
+    .navbar ul {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar ul li {
+        margin: 0 1rem;
+    }
+
+    .navbar ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 1rem;
+    }
+
+    h1 {
+        text-align: center;
+        color: #800000;
+    }
+
+    .search-bar-container {
+        border: 2px solid #800000;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        position: relative;
+        padding: 2rem 1rem;
+    }
+
+    .search-bar-container h2 {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        color: #800000;
+        padding: 0 10px;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .search-bar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .search-bar input, .search-bar select, .search-bar button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-bar button {
+        grid-column: span 2;
+        background-color: #800000;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+        background-color: #990000;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        background-color: white;
+    }
+
+    .styled-table th, .styled-table td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: right;
+    }
+
+    .styled-table th {
+        background-color: #800000;
+        color: white;
+    }
+
+    .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    gap: 0.5rem;
+}
+
+.pagination button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #800000; /* Green for the active page */
+    color: white;
+    font-weight: bold;
+    border: 1px solid #800000;
+}
+
+.pagination button:hover:not(.active) {
+    background-color: #f1f1f1;
+}
+
+
+    .footer {
+        background-color: #800000;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .footer-content h3 {
+        margin-bottom: 0.5rem;
+    }
+</style>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <button>English</button>
+                <button>عربي</button>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">الدورات التدريبية</a></li>
+                    <li><a href="#">الخطة التدريبية</a></li>
+                    <li><a href="#">الاعتمادات</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>الدورات التدريبية</h1>
+        <div class="search-bar-container">
+            <h2>بحث البيانات</h2>
+            <div class="search-bar">
+                <select>
+                    <option value="">المدينة</option>
+                    <option value="riyadh">الرياض</option>
+                    <option value="jeddah">جدة</option>
+                </select>
+                <input type="text" placeholder="اسم الدورة">
+                <select>
+                    <option value="">الشهر</option>
+                    <option value="january">يناير</option>
+                    <option value="february">فبراير</option>
+                </select>
+                <input type="date">
+                <input type="date">
+                <select>
+                    <option value="">موضوعات التدريب</option>
+                    <option value="topic1">الموضوع الأول</option>
+                </select>
+                <select>
+                    <option value="">الموضوعات الفرعية</option>
+                </select>
+                <select>
+                    <option value="">قائمة الاعتمادات</option>
+                </select>
+                <button onclick="searchTable()">بحث</button>
+                <button onclick="resetTable()">إعادة ضبط</button>
+            </div>
+        </div>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>اسم البرنامج</th>
+                    <th>الموقع</th>
+                    <th>التاريخ</th>
+                    <th>التكلفة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>برنامج أ</td>
+                    <td>الرياض</td>
+                    <td>2025-01-09</td>
+                    <td>SAR 5,750.00</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>برنامج ب</td>
+                    <td>جدة</td>
+                    <td>2025-02-10</td>
+                    <td>SAR 6,550.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button>السابق</button>
+            <button>1</button>
+            <button>2</button>
+            <button>التالي</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>ابق على اتصال</h3>
+                    <p>الرياض، طريق أبو بكر الصديق</p>
+                    <p>الإمارات العربية المتحدة - دبي</p>
+                    <p>جمهورية مصر العربية - القاهرة</p>
+                </div>
+                <div>
+                    <h3>روابط تهمك</h3>
+                    <ul>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">التحقق من الشهادات</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>الدورات الأكثر طلبًا</h3>
+                    <p>المهارات العملية لإدارة المبيعات</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    // Sample data for the table
+    const data = [
+        { id: 1, name: 'برنامج أ', location: 'الرياض', date: '2025-01-09', cost: 'SAR 5,750.00' },
+        { id: 2, name: 'برنامج ب', location: 'جدة', date: '2025-02-10', cost: 'SAR 6,550.00' },
+        { id: 3, name: 'برنامج ج', location: 'الرياض', date: '2025-03-15', cost: 'SAR 6,000.00' },
+        { id: 4, name: 'برنامج د', location: 'جدة', date: '2025-04-20', cost: 'SAR 7,000.00' },
+        { id: 5, name: 'برنامج هـ', location: 'الرياض', date: '2025-05-01', cost: 'SAR 5,900.00' },
+        { id: 6, name: 'برنامج و', location: 'جدة', date: '2025-06-10', cost: 'SAR 6,100.00' }
+    ];
+
+    const rowsPerPage = 2;
+    let currentPage = 1;
+
+    // Initialize table with data
+    function initializeTable(data) {
+        const tableBody = document.querySelector('.styled-table tbody');
+        tableBody.innerHTML = '';
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const currentData = data.slice(startIndex, endIndex);
+
+        currentData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.id}</td>
+                <td>${row.name}</td>
+                <td>${row.location}</td>
+                <td>${row.date}</td>
+                <td>${row.cost}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    // Update pagination
+    function updatePagination(data) {
+    const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(data.length / rowsPerPage);
+
+    // Previous button
+    const prevButton = document.createElement('button');
+    prevButton.innerHTML = '«';
+    prevButton.disabled = currentPage === 1;
+    prevButton.onclick = () => {
+        currentPage--;
+        initializeTable(data);
+        updatePagination(data);
+    };
+    pagination.appendChild(prevButton);
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.className = i === currentPage ? 'active' : '';
+        pageButton.onclick = () => {
+            currentPage = i;
+            initializeTable(data);
+            updatePagination(data);
+        };
+        pagination.appendChild(pageButton);
+    }
+
+    // Next button
+    const nextButton = document.createElement('button');
+    nextButton.innerHTML = '»';
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.onclick = () => {
+        currentPage++;
+        initializeTable(data);
+        updatePagination(data);
+    };
+    pagination.appendChild(nextButton);
+}
+
+function searchTable() {
+    // Correctly select the input fields and dropdowns
+    const city = document.querySelector('.search-bar select:nth-child(1)').value.toLowerCase();
+    const courseName = document.querySelector('input[placeholder="اسم الدورة"]').value.toLowerCase();
+    const month = document.querySelector('.search-bar select:nth-child(3)').value.toLowerCase();
+
+    // Filter data based on search criteria
+    const filteredData = data.filter(row => {
+        const matchesCity = city === '' || row.location.toLowerCase() === city;
+        const matchesCourseName = courseName === '' || row.name.toLowerCase().includes(courseName);
+        const matchesMonth = month === '' || new Date(row.date).toLocaleString('default', { month: 'long' }).toLowerCase() === month;
+        return matchesCity && matchesCourseName && matchesMonth;
+    });
+
+    // Display no results message if no matches
+    if (filteredData.length === 0) {
+        alert("لا توجد نتائج مطابقة للبحث.");
+    }
+
+    currentPage = 1; // Reset to the first page
+    initializeTable(filteredData);
+    updatePagination(filteredData);
+}
+function resetTable() {
+    // Clear all search inputs
+    document.querySelector('.search-bar select:nth-child(1)').value = '';
+    document.querySelector('input[placeholder="اسم الدورة"]').value = '';
+    document.querySelector('.search-bar select:nth-child(3)').value = '';
+    document.querySelector('.search-bar input[type="date"]:nth-child(4)').value = '';
+    document.querySelector('.search-bar input[type="date"]:nth-child(5)').value = '';
+
+    // Reset the table to show all data
+    currentPage = 1;
+    initializeTable(data);
+    updatePagination(data);
+}
+
+// Initialize table and pagination on page load
+initializeTable(data);
+updatePagination(data);
+
+    // Attach search button click event
+    document.querySelector('.search-bar button').addEventListener('click', searchTable);
+
+    // Initialize on page load
+    initializeTable(data);
+    updatePagination(data);
+</script>
